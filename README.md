@@ -1,5 +1,12 @@
 # 🌌 UnifiedShell v3.0.1-Neural
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-21.2.0-DD0031?style=for-the-badge&logo=angular" alt="Angular 21">
+  <img src="https://img.shields.io/badge/State_Management-NgRx_Signals-BA2BD2?style=for-the-badge&logo=ngrx" alt="NgRx Signals">
+  <img src="https://img.shields.io/badge/Performance-Zoneless-00f5ff?style=for-the-badge" alt="Zoneless">
+  <img src="https://img.shields.io/badge/Systems-Nominal-22c55e?style=for-the-badge" alt="Status">
+</p>
+
 > **The Neural Gateway to the Naveen Singh Portfolio Ecosystem.**
 
 UnifiedShell is a cutting-edge, micro-frontend-inspired Angular orchestration layer that unifies multiple immersive portfolio experiences into a single, high-performance interface. It serves as a dynamic bootstrap engine, allowing users to switch between a desktop-inspired OS environment and an immersive classic storytelling mode seamlessly.
@@ -8,12 +15,31 @@ UnifiedShell is a cutting-edge, micro-frontend-inspired Angular orchestration la
 
 ## 🚀 Vision & Architecture
 
-UnifiedShell isn't just a wrapper; it's a **Dynamic Runtime Orchestrator**.
+UnifiedShell isn't just a wrapper; it's a **Dynamic Runtime Orchestrator**. It manages the lifecycle of entire standalone applications within a single DOM context.
 
+### Dynamic Orchestration Flow
+```mermaid
+sequenceDiagram
+    participant User
+    participant Shell as Unified Shell
+    participant Loader as Dynamic Bootstrapper
+    participant App as Portfolio App (OS/Classic)
+
+    User->>Shell: Select Experience
+    Shell->>Shell: Inject Styles (assets/os/styles.css)
+    Shell->>Loader: Trigger Dynamic Import (@os-app/...)
+    Loader->>App: Download & Initialize
+    App-->>Shell: Component Ready
+    Shell->>Shell: Purge Dashboard Assets
+    Shell->>App: bootstrapApplication()
+    App->>User: Render Immersive Experience
+```
+
+### Advanced Core Concepts
 - **Micro-Frontend Pattern**: Integrates independent portfolio applications (`Naveen OS` and `Classic Mode`) as external modules resolved via TypeScript path aliases and dynamic imports.
-- **Dynamic Bootstrapping**: Uses Angular's `bootstrapApplication` at runtime to instantiate and destroy entire application contexts without page refreshes.
-- **Neural Dashboard**: A central hub featuring high-frequency WebGL effects, custom interaction protocols, and a simulated "boot sequence" to set the tone for the experience.
-- **Shared Ecosystem**: Synchronizes state and styles across apps while maintaining strict encapsulation.
+- **Zoneless Reactivity**: Leverages Angular 21's `provideZonelessChangeDetection()` to eliminate the overhead of Zone.js, resulting in faster execution and smaller bundles.
+- **Dynamic Bootstrapping**: Programmatically calls `bootstrapApplication` at runtime to instantiate and destroy entire application contexts without page refreshes.
+- **Neural Dashboard**: A central hub featuring high-frequency WebGL effects, custom interaction protocols, and a simulated "boot sequence".
 
 ---
 
@@ -21,11 +47,11 @@ UnifiedShell isn't just a wrapper; it's a **Dynamic Runtime Orchestrator**.
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Core Framework** | **Angular 21** (Standalone Components, Signals) |
+| **Core Framework** | **Angular 21** (Standalone Components, Zoneless Signals) |
 | **State Management** | **@ngrx/signals** (Reactive Signal-based state) |
 | **Visuals & VFX** | **WebGL (Canvas API)**, **CSS Conic Gradients**, **GSAP-like Animations** |
+| **Hydration** | **Angular Client Hydration** (Optimized LCP & SEO) |
 | **Testing** | **Vitest**, JSDOM Integration Testing |
-| **Integration** | **Dynamic Imports**, **Runtime Style Injection** |
 | **Utilities** | **Mermaid.js**, **Pinch Zoom**, **JetBrains Mono** |
 
 ---
@@ -52,13 +78,14 @@ The shell dynamically injects and purges stylesheets (`assets/os/styles.css` vs 
 ```text
 unified-shell/
 ├── external/               # Integrated apps (mirrored from sibling projects)
-│   ├── os-app/             # Naveen OS Source
-│   └── classic-app/        # Classic Portfolio Source
+│   ├── os-app/             # Naveen OS Source (@os-app/*)
+│   └── classic-app/        # Classic Portfolio Source (@classic-app/*)
 ├── src/
 │   ├── app/
 │   │   ├── components/
 │   │   │   └── dashboard/  # Neural Interface Hub
-│   │   └── app.ts          # Orchestration Logic (Bootstrapper)
+│   │   ├── app.ts          # Orchestration Logic (Bootstrapper)
+│   │   └── app.config.ts   # Zoneless Configuration & Providers
 │   └── styles.css          # Global Neural Reset & Scroll Control
 ├── test-runtime.js         # Headless JSDOM Smoke Tests
 └── angular.json            # Multi-project Asset Mapping
@@ -68,25 +95,18 @@ unified-shell/
 
 ## 🛠 Development Workflow
 
-### Prerequisites
-- Node.js (v20+)
-- Angular CLI
+### Detailed Command Palette
 
-### Local Setup
-```bash
-# Install dependencies
-npm install
+| Command | Action |
+| :--- | :--- |
+| `npm start` | Launches development server with external app mirroring. |
+| `npm run build` | Compiles the shell and all integrated portfolios. |
+| `npm run prebuild` | Synchronizes external apps from sibling directories. |
+| `npm run test` | Executes the Vitest unit testing suite. |
+| `node test-runtime.js`| Runs the JSDOM headless integration smoke test. |
 
-# The postinstall script automatically runs 'prebuild' 
-# to sync external apps from sibling directories.
-npm run start
-```
-
-### Building for Production
-```bash
-# Compiles the shell and all integrated portfolios
-npm run build
-```
+### Integration Strategy
+The shell uses `tsconfig.json` path aliases to treat external apps as internal modules, enabling seamless type safety across boundaries.
 
 ---
 
@@ -109,8 +129,11 @@ node test-runtime.js
 
 ## 📡 Systems Status
 - **Current Build**: `v3.0.1-Neural`
+- **Change Detection**: `Zoneless (Signal-Driven)`
+- **Hydration State**: `Active`
 - **Integrity**: `Verified`
-- **Neural Link**: `Active`
 
 ---
-*Developed by Naveen Singh. Part of the Unified Portfolio Ecosystem.*
+<p align="center">
+  <em>Developed by Naveen Singh. Part of the Unified Portfolio Ecosystem.</em>
+</p>

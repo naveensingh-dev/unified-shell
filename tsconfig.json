@@ -20,6 +20,9 @@
     "baseUrl": ".",
     "preserveSymlinks": true,
     "paths": {
+      "@angular/*": ["./node_modules/@angular/*"],
+      "rxjs": ["./node_modules/rxjs"],
+      "rxjs/*": ["./node_modules/rxjs/*"],
       "@os-app/*": ["../new-portfolio/src/app/*"],
       "@classic-app/*": ["../portfolio-angular/src/app/*"]
     }

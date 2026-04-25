@@ -117,6 +117,9 @@ export class App implements OnInit {
           window.scrollTo(0, 0);
         }
 
+        // Give DOM and styles a moment to settle
+        await new Promise(resolve => setTimeout(resolve, 50));
+
         // 3. BOOTSTRAP
         this.currentAppRef = await bootstrapApplication(rootComponent, config);
         
