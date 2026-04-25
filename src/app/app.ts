@@ -86,48 +86,46 @@ export class App implements OnInit {
     this.injectAppStyles(type);
 
     try {
-      await runInInjectionContext(this.injector, async () => {
-        let rootComponent: any;
-        let config: any;
+      let rootComponent: any;
+      let config: any;
 
-        // Parallelize module imports for faster resolution
-        if (type === 'os') {
-          const [compMod, configMod] = await Promise.all([
-            import('@os-app/app.component'),
-            import('@os-app/app.config')
-          ]);
-          rootComponent = compMod.AppComponent;
-          config = configMod.appConfig;
-        } else {
-          const [compMod, configMod] = await Promise.all([
-            import('@classic-app/app'),
-            import('@classic-app/app.config')
-          ]);
-          rootComponent = compMod.App;
-          config = configMod.appConfig;
-        }
+      // Parallelize module imports for faster resolution
+      if (type === 'os') {
+        const [compMod, configMod] = await Promise.all([
+          import('@os-app/app.component'),
+          import('@os-app/app.config')
+        ]);
+        rootComponent = compMod.AppComponent;
+        config = configMod.appConfig;
+      } else {
+        const [compMod, configMod] = await Promise.all([
+          import('@classic-app/app'),
+          import('@classic-app/app.config')
+        ]);
+        rootComponent = compMod.App;
+        config = configMod.appConfig;
+      }
 
-        // 2. PREPARE VIEW
-        this.view.set(type);
-        this.updateRootClasses('portfolio');
-        
-        const container = this.document.getElementById('portfolio-container');
-        if (container) {
-          container.innerHTML = '<app-root></app-root>';
-          window.scrollTo(0, 0);
-        }
+      // 2. PREPARE VIEW
+      this.view.set(type);
+      this.updateRootClasses('portfolio');
+      
+      const container = this.document.getElementById('portfolio-container');
+      if (container) {
+        container.innerHTML = '<app-root></app-root>';
+        window.scrollTo(0, 0);
+      }
 
-        // Give DOM and styles a moment to settle
-        await new Promise(resolve => setTimeout(resolve, 50));
+      // Give DOM and styles a moment to settle
+      await new Promise(resolve => setTimeout(resolve, 50));
 
-        // 3. BOOTSTRAP
-        this.currentAppRef = await bootstrapApplication(rootComponent, config);
-        
-        // 4. LOADER PURGE
-        this.purgePortoliosLoaders();
-        
-        console.log(`Successfully bootstrapped: ${type}`);
-      });
+      // 3. BOOTSTRAP
+      this.currentAppRef = await bootstrapApplication(rootComponent, config);
+      
+      // 4. LOADER PURGE
+      this.purgePortoliosLoaders();
+      
+      console.log(`Successfully bootstrapped: ${type}`);
     } catch (err) {
       console.error(`Bootstrap failed for ${type}:`, err);
       this.exitToDashboard();
