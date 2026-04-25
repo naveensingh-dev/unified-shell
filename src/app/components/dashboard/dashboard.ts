@@ -357,18 +357,18 @@ export class DashboardComponent implements OnDestroy {
   private runBootSequence() {
     const BOOT_LINES = [
       {t:'run',  d:0,    txt:'NEURAL KERNEL v3.0.1 — INITIALIZING UNIFIED ECOSYSTEM'},
-      {t:'ok',   d:350,  txt:'Naveen OS Engine: SignalStore & Bento Mode READY'},
-      {t:'ok',   d:600,  txt:'Classic Portfolio: High-Performance Scroll Architecture READY'},
-      {t:'run',  d:850,  txt:'Syncing shared assets and internationalization maps...'},
-      {t:'ok',   d:1100, txt:'WebGL & GSAP Interaction layers: ESTABLISHED'},
-      {t:'ok',   d:1300, txt:'Portfolios Decrypted: Full system integrity verified.'},
-      {t:'run',  d:1500, txt:'Calibrating Multi-App Dynamic Bootstrapping...'},
-      {t:'ok',   d:2050, txt:'Neural Link Stable. Accessing Naveen Singh Workspace.'},
+      {t:'ok',   d:100,  txt:'Naveen OS Engine: SignalStore & Bento Mode READY'},
+      {t:'ok',   d:200,  txt:'Classic Portfolio: High-Performance Scroll Architecture READY'},
+      {t:'run',  d:300,  txt:'Syncing shared assets and internationalization maps...'},
+      {t:'ok',   d:400,  txt:'WebGL & GSAP Interaction layers: ESTABLISHED'},
+      {t:'ok',   d:500,  txt:'Portfolios Decrypted: Full system integrity verified.'},
+      {t:'run',  d:600,  txt:'Calibrating Multi-App Dynamic Bootstrapping...'},
+      {t:'ok',   d:700,  txt:'Neural Link Stable. Accessing Naveen Singh Workspace.'},
     ];
 
     const PROGRESS_STEPS = [
-      {at:200,val:18},{at:450,val:35},{at:700,val:52},
-      {at:950,val:67},{at:1200,val:78},{at:1450,val:89},{at:1900,val:95},{at:2100,val:100}
+      {at:50,val:18},{at:150,val:35},{at:250,val:52},
+      {at:350,val:67},{at:450,val:78},{at:550,val:89},{at:650,val:95},{at:750,val:100}
     ];
 
     PROGRESS_STEPS.forEach(s => setTimeout(() => this.bootProgress.set(s.val), s.at));
@@ -382,13 +382,13 @@ export class DashboardComponent implements OnDestroy {
       const iv = setInterval(() => {
         if(i <= text.length) { this.bootWelcomeText.set(text.slice(0,i)); i++; }
         else clearInterval(iv);
-      }, 40);
-    }, 2200);
+      }, 10);
+    }, 800);
 
     setTimeout(() => {
       this.bootGone.set(true);
-      setTimeout(() => this.launchMain(), 800);
-    }, 3400);
+      setTimeout(() => this.launchMain(), 300);
+    }, 1200);
   }
 
   private launchMain() {

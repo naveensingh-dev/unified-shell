@@ -20,8 +20,8 @@
     "baseUrl": ".",
     "preserveSymlinks": true,
     "paths": {
-      "@os-app/*": ["external/os-app/*"],
-      "@classic-app/*": ["external/classic-app/*"]
+      "@os-app/*": ["../new-portfolio/src/app/*"],
+      "@classic-app/*": ["../portfolio-angular/src/app/*"]
     }
   },
   "angularCompilerOptions": {

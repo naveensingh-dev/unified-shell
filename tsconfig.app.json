@@ -9,7 +9,6 @@
   ],
   "include": [
     "src/**/*.ts",
-    "external/**/*.ts",
     "../new-portfolio/src/app/**/*.ts",
     "../portfolio-angular/src/app/**/*.ts"
   ],

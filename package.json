@@ -5,8 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "prebuild": "mkdir -p external && rm -rf external/* && cp -R ../new-portfolio/src/app external/os-app && cp -R ../portfolio-angular/src/app external/classic-app",
-    "postinstall": "npm run prebuild",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -82,7 +82,7 @@ export class App implements OnInit {
   async onExperienceSelect(type: 'os' | 'classic') {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // 1. STYLE WARMUP: Inject styles immediately while module downloads
+    // 1. STYLE WARMUP: Inject styles immediately
     this.injectAppStyles(type);
 
     try {
@@ -90,19 +90,24 @@ export class App implements OnInit {
         let rootComponent: any;
         let config: any;
 
+        // Parallelize module imports for faster resolution
         if (type === 'os') {
-          const { AppComponent } = await import('@os-app/app.component');
-          const { appConfig } = await import('@os-app/app.config');
-          rootComponent = AppComponent;
-          config = appConfig;
+          const [compMod, configMod] = await Promise.all([
+            import('@os-app/app.component'),
+            import('@os-app/app.config')
+          ]);
+          rootComponent = compMod.AppComponent;
+          config = configMod.appConfig;
         } else {
-          const { App: ClassicComponent } = await import('@classic-app/app');
-          const { appConfig } = await import('@classic-app/app.config');
-          rootComponent = ClassicComponent;
-          config = appConfig;
+          const [compMod, configMod] = await Promise.all([
+            import('@classic-app/app'),
+            import('@classic-app/app.config')
+          ]);
+          rootComponent = compMod.App;
+          config = configMod.appConfig;
         }
 
-        // 2. PREPARE VIEW: Switch view state only after download is done
+        // 2. PREPARE VIEW
         this.view.set(type);
         this.updateRootClasses('portfolio');
         
@@ -112,10 +117,10 @@ export class App implements OnInit {
           window.scrollTo(0, 0);
         }
 
-        // 3. BOOTSTRAP: Initialize the app
+        // 3. BOOTSTRAP
         this.currentAppRef = await bootstrapApplication(rootComponent, config);
         
-        // 4. LOADER PURGE: Immediately find and kill any portfolio-level loaders
+        // 4. LOADER PURGE
         this.purgePortoliosLoaders();
         
         console.log(`Successfully bootstrapped: ${type}`);
