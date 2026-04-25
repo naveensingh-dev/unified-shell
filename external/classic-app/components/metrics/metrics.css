@@ -1,0 +1,245 @@
+.metrics-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(255,255,255,0.05);
+  position:relative;z-index:2;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.metric-enhanced{
+  background:rgba(6, 10, 20, 0.4);
+  backdrop-filter: blur(24px) saturate(1.5);
+  padding:48px 32px 40px;
+  text-align:center;
+  transition:all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position:relative;overflow:hidden;
+  cursor:default;
+  transform-style: preserve-3d;
+}
+.metric-enhanced:hover{
+  background:rgba(15, 22, 40, 0.6);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.15) inset;
+}
+
+.metric-pulse-line {
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.8), transparent);
+  transform: scaleX(0);
+  transition: transform 0.6s ease;
+}
+.metric-enhanced:hover .metric-pulse-line { transform: scaleX(1); }
+
+/* HEARTBEAT MONITOR */
+.live-heartbeat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.heartbeat-container {
+  height: 120px;
+  margin: 0 auto 20px;
+  width: 100%;
+  position: relative;
+  background: rgba(10, 15, 30, 0.6);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(20px);
+}
+
+.hb-grid {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+  background-size: 10px 10px;
+  z-index: 0; pointer-events: none;
+}
+
+.hb-status {
+  position: absolute; top: 10px; left: 10px;
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.6); letter-spacing: 0.1em;
+  z-index: 2;
+}
+
+.hb-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--em2);
+  animation: pulseHbDot 1s ease-in-out infinite;
+}
+
+@keyframes pulseHbDot {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.hb-value {
+  font-family: var(--hero); font-size: 32px; color: var(--em2);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  position: relative; z-index: 2; margin-top: 10px;
+}
+
+.hb-graph {
+  position: absolute; bottom: 0; left: 0; width: 200%; height: 60px;
+  z-index: 1;
+  animation: slideGraph 3s linear infinite;
+}
+
+@keyframes slideGraph {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.hb-path {
+  fill: none;
+  stroke: var(--em2);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px var(--em2));
+}
+
+.tower-wrap {
+  position: relative;
+  width: 60px;
+  height: 120px;
+  margin: 0 auto 20px;
+  perspective: 1000px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.tower {
+  position: relative;
+  width: 40px;
+  height: 0;
+  background: var(--tower-c);
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(25deg);
+  transition: height 1.2s cubic-bezier(.34,1.56,.64,1) var(--tower-delay);
+  box-shadow: 0 0 30px var(--tower-c);
+}
+
+.metric-enhanced.vis .tower {
+  height: var(--tower-h);
+}
+
+.tower-face {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border: 1px solid rgba(255,255,255,0.2);
+  backface-visibility: hidden;
+}
+
+.tower-front { transform: translateZ(20px); background: linear-gradient(to top, var(--tower-c), transparent); opacity: 0.9; }
+.tower-back  { transform: rotateY(180deg) translateZ(20px); opacity: 0.4; }
+.tower-left  { transform: rotateY(-90deg) translateZ(20px); width: 40px; background: rgba(0,0,0,0.4); }
+.tower-right { transform: rotateY(90deg) translateZ(20px); width: 40px; background: rgba(255,255,255,0.15); }
+.tower-top   { 
+  bottom: auto; top: 0; height: 40px; 
+  transform: rotateX(90deg) translateZ(20px); 
+  background: #fff; opacity: 1;
+  box-shadow: 0 0 30px var(--tower-c);
+}
+
+.tower-data {
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(40px);
+  width: max-content;
+  pointer-events: none;
+}
+
+.metric-gauge-num{
+  font-family:var(--hero);font-size:clamp(30px,3vw,40px);letter-spacing:.02em;color:#fff;
+  text-shadow: 0 0 20px var(--tower-c), 0 0 40px var(--tower-c);
+}
+.metric-gauge-num.c-col{color:var(--c4)}
+.metric-gauge-num.g-col{color:var(--em2)}
+.metric-gauge-num.gold-col{color:var(--gold3)}
+
+.metric-label{
+  font-weight:800;font-size:var(--body-sz);
+  color:#fff;margin-bottom:8px;letter-spacing:-.01em;
+  transform: translateZ(10px);
+}
+.metric-sub{
+  font-family:var(--mono);font-size:12px;
+  color:var(--txt2);line-height:1.5;
+  transform: translateZ(5px);
+}
+
+/* =========================================================================
+   SCROLL NARRATIVE SVG (LCP)
+   ========================================================================= */
+.lcp-chart-container {
+  position: relative;
+  height: 120px;
+  margin: 0 auto 20px;
+  transform: translateZ(20px);
+  width: 100%;
+}
+.lcp-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.lcp-path-bg {
+  fill: none;
+  stroke: rgba(34, 211, 238, 0.1);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+.lcp-path {
+  fill: none;
+  stroke: var(--c4);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px var(--c4));
+  stroke-dasharray: 1000;
+  /* Use the CSS variable set via TS to dynamically draw the path */
+  stroke-dashoffset: calc(1000 - (var(--narrative-progress, 0) * 1000));
+}
+.lcp-dot {
+  fill: var(--c4);
+  filter: drop-shadow(0 0 8px var(--c4));
+  opacity: var(--narrative-progress, 0);
+}
+.lcp-val-old {
+  position: absolute; top: 0; left: 0;
+  font-family: var(--mono); font-size: 14px; color: var(--txt4);
+  text-decoration: line-through;
+}
+.lcp-val-new {
+  position: absolute; bottom: 0; right: 0;
+  font-family: var(--mono); font-size: 16px; font-weight: bold; color: var(--c4);
+  opacity: var(--narrative-progress, 0);
+}
+.lcp-overlay-num {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: var(--narrative-progress, 0);
+}
+
+
+@media(max-width:1024px){
+  .metrics-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .metric-enhanced{padding:32px 20px}
+  .tower-wrap{height:100px}
+}
+

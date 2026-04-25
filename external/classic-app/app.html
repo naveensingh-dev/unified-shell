@@ -1,0 +1,468 @@
+<!-- ═══════════════════════════════════════════
+   AWARD-WINNING BACKGROUND SYSTEM
+═══════════════════════════════════════════ -->
+<div class="mesh"></div>
+<div class="bg-grid"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="prog"></div>
+<div id="scroll-progress"></div>
+
+<!-- MAGNETIC CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ldr-glyph">
+    <div class="ldr-dot"></div>
+  </div>
+  <div class="ldr-name">NAVEEN SINGH</div>
+  <div class="ldr-sub">Senior Angular Architect</div>
+  <div class="ldr-bar"></div>
+</div>
+
+<!-- THEME SWITCHER -->
+<div id="theme-toggle">
+  <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Switch Theme">
+    <div class="theme-swatches">
+      <div class="theme-swatch" style="background:#7C3AED"></div>
+      <div class="theme-swatch" style="background:#06B6D4"></div>
+    </div>
+  </button>
+  <div class="theme-panel" id="theme-panel">
+    <div class="theme-btn active" data-theme="aurora">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#7C3AED"></div><div class="theme-swatch" style="background:#06B6D4"></div></div>
+      <div><div class="theme-name">Aurora</div><div class="theme-desc">Electric Violet & Cyan</div></div>
+    </div>
+    <div class="theme-btn" data-theme="midnight-rose">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#DB2777"></div><div class="theme-swatch" style="background:#F97316"></div></div>
+      <div><div class="theme-name">Midnight Rose</div><div class="theme-desc">Deep Pink & Orange</div></div>
+    </div>
+    <div class="theme-btn" data-theme="neon-tokyo">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#00CC6E"></div><div class="theme-swatch" style="background:#FF1560"></div></div>
+      <div><div class="theme-name">Neon Tokyo</div><div class="theme-desc">Cyber Lime & Magenta</div></div>
+    </div>
+    <div class="theme-btn" data-theme="arctic">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#1D4ED8"></div><div class="theme-swatch" style="background:#0EA5E9"></div></div>
+      <div><div class="theme-name">Arctic Blue</div><div class="theme-desc">Deep Ocean & Sky</div></div>
+    </div>
+    <div class="theme-btn" data-theme="emerald">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#047857"></div><div class="theme-swatch" style="background:#7C3AED"></div></div>
+      <div><div class="theme-name">Emerald</div><div class="theme-desc">Forest Green & Violet</div></div>
+    </div>
+    <div class="theme-btn" data-theme="royal-gold">
+      <div class="theme-swatches"><div class="theme-swatch" style="background:#B45309"></div><div class="theme-swatch" style="background:#9CA3AF"></div></div>
+      <div><div class="theme-name">Royal Gold</div><div class="theme-desc">Amber & Slate</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RANK 1: COMMAND PALETTE -->
+<div id="cmd-palette" class="cmd-palette" [class.open]="isCmdOpen">
+  <div class="cmd-overlay" (click)="toggleCmd(false)"></div>
+  <div class="cmd-box">
+    <div class="cmd-header">
+      <span class="cmd-prompt">NS_ARCHITECT:~$</span>
+      <input #cmdInput type="text" class="cmd-input" placeholder="type 'help' for commands..." (keydown.enter)="executeCmd($event)" (blur)="onCmdBlur()">
+    </div>
+    <div class="cmd-results" id="cmd-results">
+      <div class="cmd-line intro">Welcome to the Command Interface. Type 'help' to begin.</div>
+    </div>
+  </div>
+</div>
+
+<!-- RANK 1: X-RAY TOGGLE -->
+<button class="xray-toggle" id="xray-toggle" (click)="toggleXray()" [class.active]="isXrayActive">
+  <div class="xray-dot"></div>
+  <span>X-RAY MODE</span>
+  <span class="xray-key">ALT+X</span>
+</button>
+
+<app-header></app-header>
+
+<main>
+  <app-hero id="hero"></app-hero>
+  
+  <div class="mq-wrap">
+    <div class="mq-inner">
+      <div class="mq-item"><span class="mq-t">Angular Architect</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">GenAI Engineer</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Signal Store Expert</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Nx Monorepo Lead</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Performance Authority</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Frontend Platform Lead</span><div class="mq-sep"></div></div>
+      <!-- Loop -->
+      <div class="mq-item"><span class="mq-t">Angular Architect</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">GenAI Engineer</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Signal Store Expert</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Nx Monorepo Lead</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Performance Authority</span><div class="mq-sep"></div></div>
+      <div class="mq-item"><span class="mq-t">Frontend Platform Lead</span><div class="mq-sep"></div></div>
+    </div>
+  </div>
+
+  <app-metrics></app-metrics>
+  
+  <hr class="hr">
+  
+  <!-- 
+    PERFORMANCE OPTIMIZATION: @defer (on idle)
+    We defer loading of below-the-fold components until the browser is idle.
+    This improves the Initial Page Load and TBT (Total Blocking Time).
+    We use empty placeholders to avoid CLS (Cumulative Layout Shift) issues 
+    by ensuring they load only when they are not in the initial viewport.
+  -->
+  @defer (on idle) {
+    <app-why-hire id="why-hire"></app-why-hire>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-advancing id="about"></app-advancing>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-video-intro></app-video-intro>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-skills id="skills"></app-skills>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-experience id="experience"></app-experience>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-projects id="projects"></app-projects>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-case-studies id="case-studies"></app-case-studies>
+  } @placeholder {
+    <div></div>
+  }
+  
+  <hr class="hr">
+  
+  @defer (on idle) {
+    <app-tech-pipeline id="ai"></app-tech-pipeline>
+  } @placeholder {
+    <div></div>
+  }
+
+  <hr class="hr">
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div class="r">
+        <p class="s-eyebrow">Get In Touch</p>
+        <h2 class="s-title" id="contact-h">Let's <em>Build</em> Something<br>Extraordinary</h2>
+        <p class="s-sub">Open to senior roles, principal architect positions, and strategic consulting. Remote-first, available immediately.</p>
+      </div>
+      <div class="contact-full r">
+        <div class="contact-l">
+          <div class="c-btns" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+            <button class="btn-primary ripple-btn" (click)="openScheduler()">📅 Schedule a 30-min Strategy Call →</button>
+            <button class="btn-ghost ripple-btn" id="cd" (click)="openResume($event)">↓ Free Architecture Playbook</button>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">✉️</div>
+            <div>
+              <div class="ci-lbl">Email</div>
+              <div class="ci-val"><a href="mailto:n_aveen&#64;outlook.com">n_aveen&#64;outlook.com</a></div>
+              <button class="copy-b" (click)="copyToClipboard('n_aveen@outlook.com', $event)" aria-label="Copy email">
+                <svg style="width:10px;height:10px;fill:currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                Copy
+              </button>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">📱</div>
+            <div>
+              <div class="ci-lbl">Phone / WhatsApp</div>
+              <div class="ci-val"><a href="tel:+918077486316">+91 80774 86316</a></div>
+              <button class="copy-b" (click)="copyToClipboard('+918077486316', $event)" aria-label="Copy phone">
+                <svg style="width:10px;height:10px;fill:currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                Copy
+              </button>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">💼</div>
+            <div>
+              <div class="ci-lbl">LinkedIn</div>
+              <div class="ci-val"><a href="https://www.linkedin.com/in/naveen-singh-57051ab9/" target="_blank" rel="noopener noreferrer">linkedin.com/in/naveen-singh-57051ab9</a></div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-ico">📍</div>
+            <div>
+              <div class="ci-lbl">Location &amp; Availability</div>
+              <div class="ci-val">Rishikesh, India · <span style="color:var(--em2);font-weight:700">Immediately Available</span></div>
+            </div>
+          </div>
+          <div class="contact-credibility">
+            <div class="cc-item">52-week <strong>GitHub streak</strong></div>
+            <div class="cc-item"><strong>128 stars</strong> open source</div>
+            <div class="cc-item">Available for <strong>paid trial sprint</strong></div>
+            <div class="cc-item"><strong>Response in 24h</strong> guaranteed</div>
+          </div>
+        </div>
+        <div class="contact-r">
+          <div class="lm-section-title">📦 Free Resources — Download &amp; Use</div>
+          <div class="lead-magnets">
+            <div class="lm-card" (click)="openLM('Angular Performance Checklist')">
+              <div class="lm-ico ang">⚡</div>
+              <div>
+                <div class="lm-name">Angular Performance Checklist</div>
+                <div class="lm-meta">PDF · 15 points · From $50k banking platform</div>
+              </div>
+              <div class="lm-dl">↓ Free</div>
+            </div>
+            <div class="lm-card" (click)="openLM('Production RAG Architecture Guide')">
+              <div class="lm-ico rag">🤖</div>
+              <div>
+                <div class="lm-name">Production RAG Architecture Guide</div>
+                <div class="lm-meta">PDF · 20 pages · Compliance-ready design</div>
+              </div>
+              <div class="lm-dl">↓ Free</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Modals -->
+<div id="resume-dl-modal" class="modal" role="dialog" aria-modal="true">
+  <div class="rdm-box">
+    <button class="rdm-close" (click)="closeModals()">✕</button>
+    <div class="rdm-icon">📄</div>
+    <div class="rdm-title">Resume</div>
+    <div class="rdm-sub">Naveen Singh · Senior Angular Architect</div>
+    <div class="rdm-actions">
+      <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" download="NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" class="rdm-btn-dl">Download PDF</a>
+      <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" target="_blank" class="rdm-btn-view">View in Tab</a>
+    </div>
+  </div>
+</div>
+
+<div id="resume-viewer" class="modal" role="dialog" aria-modal="true">
+  <div class="rv-container">
+    <div class="rv-header">
+      <div class="rv-title">Resume Preview</div>
+      <div class="rv-actions">
+        <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" target="_blank" class="rv-btn">Open in Tab</a>
+        <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" download="NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" class="rv-btn primary">Download</a>
+        <button (click)="closeModals()" class="rv-btn close">✕ Close</button>
+      </div>
+    </div>
+    <iframe src="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" class="rv-iframe"></iframe>
+  </div>
+</div>
+
+<div id="lm-modal" class="modal" role="dialog" aria-modal="true">
+  <div class="lm-modal-box">
+    <button class="rdm-close" (click)="closeModals()">✕</button>
+    <div class="lm-modal-form" id="lm-modal-form" [class.sf-hidden]="isLMSuccess">
+      <div class="lm-modal-badge">📦 Free Resource</div>
+      <div class="lm-modal-title" id="lm-title">{{lmTitle}}</div>
+      <div class="lm-email-row">
+        <input type="email" class="lm-email-input" id="lm-email-input" placeholder="your&#64;email.com">
+        <button class="lm-submit" (click)="submitLM()">Get Free →</button>
+      </div>
+    </div>
+    <div class="lm-success" id="lm-success-box" [class.open]="isLMSuccess">
+      <div class="lm-success-ico">✅</div>
+      <div class="lm-success-title">Check Your Inbox!</div>
+      <p class="lm-success-text">The resource is on its way. While you wait — feel free to reach out on LinkedIn or schedule a quick call.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Smart Scheduler Modal: Multi-step booking system -->
+<div id="sched-modal" class="modal" role="dialog" aria-modal="true" aria-label="Schedule a strategy call">
+  <div class="sched-box">
+    <!-- Visual Background Glow -->
+    <div style="position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:var(--v);filter:blur(150px);opacity:0.1;pointer-events:none;"></div>
+    
+    <!-- Modal Header -->
+    <div class="sched-header">
+      <div class="sched-header-l">
+        <div class="sched-eyebrow">Free 30-min strategy call</div>
+        <div class="sched-title">{{schedTitle}}</div>
+        <div class="sched-sub">Direct calendar sync — no account required</div>
+      </div>
+      <button class="sched-close" (click)="closeModals()" aria-label="Close">✕</button>
+    </div>
+
+    <!-- Progress Steps Indicator -->
+    <div class="sched-steps">
+      <div class="sched-step" [ngClass]="{'active': schedStep === 1, 'done': schedStep > 1}"></div>
+      <div class="sched-step" [ngClass]="{'active': schedStep === 2, 'done': schedStep > 2}"></div>
+      <div class="sched-step" [ngClass]="{'active': schedStep === 3, 'done': schedStep > 3}"></div>
+    </div>
+
+    <!-- Step 1: Date & Time Picker -->
+    <div id="sched-pick" class="sched-step-content" *ngIf="schedStep === 1">
+      <div class="sched-body sched-pick-body">
+        <!-- Calendar Column -->
+        <div class="sched-calendar-col">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" (click)="calPrevMonth()">‹</button>
+            <div class="cal-month-year">{{getMonthYearText()}}</div>
+            <button class="cal-nav-btn" (click)="calNextMonth()">›</button>
+          </div>
+          <div class="cal-weekdays">
+            <div *ngFor="let day of WEEKDAYS">{{day}}</div>
+          </div>
+          <div class="cal-grid">
+            <button *ngFor="let d of calendarDays" type="button" class="cal-day" 
+                 [ngClass]="{'other-month': d.type === 'other', 'disabled': d.disabled, 'future': d.future, 'sunday': d.sunday, 'sel': selectedDate && d.date && selectedDate.getTime() === d.date.getTime()}"
+                 (click)="selectDate(d)">{{d.day}}</button>
+          </div>
+        </div>
+        <div class="sched-divider"></div>
+        <!-- Time Slot Column -->
+        <div class="sched-time-col">
+          <div class="time-header">{{getTimeHeaderText()}}</div>
+          <div class="slots-grid">
+            <div *ngIf="timeSlots.length === 0" class="slots-empty">
+              <div style="font-size: 24px; margin-bottom: 8px;">📅</div>
+              Pick a date to view available slots
+            </div>
+            <button *ngFor="let s of timeSlots" class="slot-btn" [ngClass]="{'sel': selectedSlot && selectedSlot.h === s.h && selectedSlot.m === s.m}" (click)="selectSlot(s)">{{fmt12(s.h, s.m)}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Agenda & User Details -->
+    <div id="sched-agenda" class="sched-step-content" *ngIf="schedStep === 2">
+      <div class="sched-body" style="flex-direction:column">
+        <h3 class="agenda-title">What's on your mind?</h3>
+        <p class="agenda-subtitle">Help me prepare — makes the session 10x more valuable.</p>
+        <div class="agenda-slot-display"><span>{{getAgendaSlotText()}}</span></div>
+        
+        <div class="agenda-label">TOPICS FOR DISCUSSION</div>
+        <div class="agenda-buttons">
+          <button *ngFor="let opt of AGENDA_OPTIONS" 
+                  class="agenda-btn" 
+                  [class.sel]="selectedAgendaItems.includes(opt.label)"
+                  (click)="toggleAgendaItem(opt.label)">
+            {{opt.icon}} {{opt.label}}
+          </button>
+        </div>
+
+        <div class="agenda-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-input" [value]="schedName" (input)="updateSchedName($event)" placeholder="John Smith" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Work Email</label>
+              <input type="email" class="form-input" [value]="schedEmail" (input)="updateSchedEmail($event)" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Additional Context (Optional)</label>
+            <textarea class="form-input form-textarea" [value]="schedNotes" (input)="updateSchedNotes($event)" placeholder="e.g. Migration strategy, architecture review..."></textarea>
+          </div>
+          <div class="auto-add-confirm"><span class="auto-add-check">✓</span><span>Organiser: <strong>{{schedEmail || 'your.email@company.com'}}</strong></span></div>
+          
+          <div class="agenda-nav-btns">
+            <button class="agenda-back-btn" (click)="schedStep = 1">← Back</button>
+            <button class="agenda-next-btn" (click)="goToCalendarConfirm()">Continue to Calendar →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Calendar Sync Options -->
+    <div id="sched-confirm" class="sched-step-content" *ngIf="schedStep === 3">
+      <div class="sched-body" style="flex-direction:column">
+        <div class="sched-confirm-inner">
+          <div class="confirm-slot-display">
+            <div class="csd-ico">🗓️</div>
+            <div class="csd-info">
+              <div class="csd-date">{{confirmDateText}}</div>
+              <div class="csd-time">{{confirmTimeText}}</div>
+              <div class="csd-guest">Guest: <strong id="confirm-guest-email">{{schedEmail}}</strong></div>
+              <div class="csd-dur">30-min strategy session · Google Meet / Zoom</div>
+            </div>
+          </div>
+          <div class="confirm-label">SYNC TO YOUR CALENDAR</div>
+          <div class="cal-options">
+            <button class="cal-opt" (click)="openCalendarLink('google')"><div class="co-ico google">G</div><div class="co-text"><div class="co-name">Google Calendar</div><div class="co-desc">Sync to Gmail</div></div><div class="co-arrow">→</div></button>
+            <button class="cal-opt" (click)="openCalendarLink('outlook')"><div class="co-ico outlook">O</div><div class="co-text"><div class="co-name">Outlook / Office 365</div><div class="co-desc">Sync to Outlook</div></div><div class="co-arrow">→</div></button>
+            <button class="cal-opt" (click)="downloadIcs()"><div class="co-ico other">I</div><div class="co-text"><div class="co-name">Apple / Other Calendar</div><div class="co-desc">Download .ics</div></div><div class="co-arrow">→</div></button>
+          </div>
+          <div class="sched-back-btn" (click)="schedStep = 2">← Modify details</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Final Confirmation Screen -->
+    <div id="sched-success" class="sched-step-content" *ngIf="schedStep === 4">
+      <div class="sched-body" style="flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div class="ss-ico">✨</div>
+        <div class="ss-title">Confirmed!</div>
+        <div class="ss-sub">The event is on your calendar. I'll send a meeting link shortly before our call.</div>
+        <button class="ss-close-btn" (click)="closeModals()">Back to Portfolio</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="btt" aria-label="Scroll to top" (click)="scrollToTop()">↑</button>
+
+<!-- RANK 1: ADAPTIVE PERFORMANCE MONITOR -->
+<div class="sys-monitor" id="sys-monitor" title="Adaptive Performance Engine">
+  <div class="sys-m-row">
+    <div class="sys-m-dot"></div>
+    <div class="sys-m-lbl">SYS_FPS:</div>
+    <div class="sys-m-val" id="sys-fps-val">60</div>
+  </div>
+  <div class="sys-m-row">
+    <div class="sys-m-lbl" style="margin-left:12px">MEM_LOAD:</div>
+    <div class="sys-m-val" id="sys-load-val">20%</div>
+  </div>
+</div>
+
+<div class="float-badge" id="float-badge" role="status" aria-live="polite">
+  <div class="float-badge-ico" id="float-badge-ico">🏆</div>
+  <div>
+    <div class="float-badge-title" id="float-badge-title">Architecture Owner</div>
+    <div class="float-badge-sub" id="float-badge-sub">$50k/month banking platform</div>
+  </div>
+</div>

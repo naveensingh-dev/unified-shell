@@ -1,0 +1,35 @@
+<header>
+  <nav id="nav" class="nav" aria-label="Main navigation" [class.sc]="isScrolled">
+    <div class="nw">
+      <a href="#hero" class="n-logo">NS<div class="n-logo-dot"></div></a>
+      <div class="n-links" role="menubar">
+        <a href="#why-hire" class="n-a" [class.on]="activeSection === 'why-hire'" data-s="why-hire">Why Me</a>
+        <a href="#about" class="n-a" [class.on]="activeSection === 'about'" data-s="about">About</a>
+        <a href="#skills" class="n-a" [class.on]="activeSection === 'skills'" data-s="skills">Skills</a>
+        <a href="#experience" class="n-a" [class.on]="activeSection === 'experience'" data-s="experience">Experience</a>
+        <a href="#projects" class="n-a" [class.on]="activeSection === 'projects'" data-s="projects">Projects</a>
+        <a href="#case-studies" class="n-a" [class.on]="activeSection === 'case-studies'" data-s="case-studies">Studies</a>
+        <a href="#ai" class="n-a" [class.on]="activeSection === 'ai'" data-s="ai">GenAI</a>
+        <a href="#contact" class="n-a" [class.on]="activeSection === 'contact'" data-s="contact">Contact</a>
+      </div>
+      <div class="n-btns">
+        <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" class="btn-outline" id="nd" (click)="openResume($event)">↓ Resume</a>
+        <button (click)="openScheduler()" class="btn-hire">Hire Me →</button>
+      </div>
+      <button class="ham" id="ham" [class.open]="isMenuOpen" aria-expanded="false" aria-controls="mobnav" aria-label="Toggle menu" (click)="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav id="mobnav" class="mob-nav" [class.open]="isMenuOpen" aria-label="Mobile navigation">
+    <a href="#about" class="mob-a" (click)="closeMenu()">About</a>
+    <a href="#why-hire" class="mob-a" (click)="closeMenu()">Why Me</a>
+    <a href="#skills" class="mob-a" (click)="closeMenu()">Skills</a>
+    <a href="#experience" class="mob-a" (click)="closeMenu()">Experience</a>
+    <a href="#projects" class="mob-a" (click)="closeMenu()">Projects</a>
+    <a href="#ai" class="mob-a" (click)="closeMenu()">GenAI</a>
+    <a href="#testimonials" class="mob-a" (click)="closeMenu()">Reviews</a>
+    <a href="#contact" class="mob-a" (click)="closeMenu()">Contact</a>
+    <a href="/assets/NAVEEN_SINGH_ANGULAR_ARCHITECT.pdf" class="mob-a" id="mnd" (click)="openResume($event)">Resume</a>
+  </nav>
+</header>

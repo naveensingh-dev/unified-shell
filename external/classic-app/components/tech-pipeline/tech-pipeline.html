@@ -1,0 +1,173 @@
+<section id="ai" aria-labelledby="ai-h">
+  <div class="wrap">
+    <div class="r">
+      <p class="s-eyebrow">Generative AI Engineering</p>
+      <h2 class="s-title" id="ai-h">GenAI <em>Architecture</em></h2>
+      <p class="s-sub">Production-grade AI systems built for regulated environments — not prototypes, but enterprise-ready pipelines with full auditability.</p>
+    </div>
+    <div class="ai-intro r">
+      <div class="ai-card">
+        <div class="ai-card-ico">🧠</div>
+        <div class="ai-card-title">RAG Pipeline Expertise</div>
+        <p class="ai-card-body">End-to-end RAG system design: document ingestion, chunking strategy, FAISS IVF-PQ vector indexing, hybrid retrieval, and <strong>5-layer hallucination mitigation</strong>. Built for 50k+ document corpora with sub-500ms p95 retrieval in production banking environments.</p>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-ico">🔬</div>
+        <div class="ai-card-title">Observability &amp; Governance</div>
+        <p class="ai-card-body">LangSmith tracing, Arize Phoenix model monitoring, <strong>LLM-as-Judge evaluation frameworks</strong> with 98%+ accuracy. Every AI output is auditable, source-attributed, and compliant — meeting the bar for regulated financial institutions.</p>
+      </div>
+    </div>
+
+    <!-- Interactive RAG Pipeline -->
+    <div class="rag-pipeline r">
+      <div class="rag-pipeline-title">Interactive RAG Architecture — Click each stage to explore</div>
+      <div class="rag-steps" id="rag-steps">
+        <div class="rag-step active" data-step="0" (click)="setStep(0)">
+          <div class="rag-step-num">01</div>
+          <div class="rag-step-icon">📄</div>
+          <div class="rag-step-title">Ingestion</div>
+          <div class="rag-step-desc">Document parsing, semantic chunking &amp; metadata tagging</div>
+          <div class="rag-arrow">→</div>
+        </div>
+        <div class="rag-step" data-step="1" (click)="setStep(1)">
+          <div class="rag-step-num">02</div>
+          <div class="rag-step-icon">🔢</div>
+          <div class="rag-step-title">Embedding</div>
+          <div class="rag-step-desc">OpenAI/BGE embeddings → FAISS IVF-PQ indexing</div>
+          <div class="rag-arrow">→</div>
+        </div>
+        <div class="rag-step" data-step="2" (click)="setStep(2)">
+          <div class="rag-step-num">03</div>
+          <div class="rag-step-icon">🔍</div>
+          <div class="rag-step-title">Retrieval</div>
+          <div class="rag-step-desc">Hybrid semantic + BM25, sub-500ms p95 on 50k docs</div>
+          <div class="rag-arrow">→</div>
+        </div>
+        <div class="rag-step" data-step="3" (click)="setStep(3)">
+          <div class="rag-step-num">04</div>
+          <div class="rag-step-icon">🛡</div>
+          <div class="rag-step-title">Mitigation</div>
+          <div class="rag-step-desc">5-layer hallucination prevention pipeline</div>
+          <div class="rag-arrow">→</div>
+        </div>
+        <div class="rag-step" data-step="4" (click)="setStep(4)">
+          <div class="rag-step-num">05</div>
+          <div class="rag-step-icon">💬</div>
+          <div class="rag-step-title">Generation</div>
+          <div class="rag-step-desc">SSE streaming, source attribution, audit trail</div>
+        </div>
+      </div>
+      <div id="rag-detail" class="rag-detail open">
+        <div class="rag-detail-title">{{ steps[activeStep].title }}</div>
+        <div class="rag-detail-body">{{ steps[activeStep].body }}</div>
+        <div class="rag-detail-tags">
+          @for (tag of steps[activeStep].tags; track tag) {
+            <span class="rag-t">{{ tag }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Mock RAG Demo -->
+    <div class="rag-demo r">
+      <div class="rag-demo-header">
+        <div class="rag-demo-dot"></div>
+        <div class="rag-demo-dot"></div>
+        <div class="rag-demo-dot"></div>
+        <div class="rag-demo-title">RAG Compliance Assistant · Banking Demo · 98% Accuracy</div>
+      </div>
+      <div class="rag-demo-body">
+        <div class="rag-chat">
+          <div class="rag-msg ai">
+            <div class="rag-msg-avatar">🤖</div>
+            <div>
+              <div class="rag-msg-bubble">Hello! I'm the Compliance Assistant. I can answer questions about banking regulations, policy documents, and compliance requirements. All answers are sourced directly from your document corpus.
+              </div>
+            </div>
+          </div>
+          <div class="rag-msg user">
+            <div class="rag-msg-avatar">👤</div>
+            <div class="rag-msg-bubble">What are the KYC requirements for onboarding corporate clients?</div>
+          </div>
+          <div class="rag-msg ai">
+            <div class="rag-msg-avatar">🤖</div>
+            <div>
+              <div class="rag-msg-bubble">
+                Based on <strong>RBI Master Direction 2016 (updated 2024)</strong> and your internal <strong>KYC Policy v4.2</strong>, corporate client onboarding requires: Certificate of Incorporation, MOA/AOA, Board Resolution authorizing account opening, identity &amp; address proof for beneficial owners with ≥25% stake, and FATF country risk assessment. Enhanced Due Diligence applies if annual turnover exceeds ₹25 Crore.
+                <div class="rag-source-tag">📄 Sources: 3 documents cited</div>
+                <div class="rag-confidence">
+                  <span class="rag-conf-label">Confidence</span>
+                  <div class="rag-conf-bar"><div class="rag-conf-fill"></div></div>
+                  <span class="rag-conf-val">98%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rag-sources">
+          <div class="rag-src-header">Source Documents</div>
+          <div class="rag-src-item highlighted">
+            <div class="rag-src-name">RBI Master Direction 2016</div>
+            <div class="rag-src-score">
+              <div class="rag-src-score-bar"><div class="rag-src-score-fill" style="width:96%"></div></div>
+              <span class="rag-src-score-val">0.96</span>
+            </div>
+          </div>
+          <div class="rag-src-item highlighted">
+            <div class="rag-src-name">KYC Policy v4.2 — Internal</div>
+            <div class="rag-src-score">
+              <div class="rag-src-score-bar"><div class="rag-src-score-fill" style="width:91%"></div></div>
+              <span class="rag-src-score-val">0.91</span>
+            </div>
+          </div>
+          <div class="rag-src-item">
+            <div class="rag-src-name">FATF Risk Categories 2024</div>
+            <div class="rag-src-score">
+              <div class="rag-src-score-bar"><div class="rag-src-score-fill" style="width:78%"></div></div>
+              <span class="rag-src-score-val">0.78</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rag-demo-input">
+        <input class="rag-input-field" type="text" placeholder="Ask a compliance question…" readonly value="What are the FEMA reporting requirements for foreign remittances?">
+        <button class="rag-send-btn" id="rag-send-btn">Ask →</button>
+      </div>
+    </div>
+    <div class="ai-pillars r">
+      <div class="ai-pillar">
+        <div class="ai-p-num">01</div>
+        <div class="ai-p-title">Retrieval Layer</div>
+        <p class="ai-p-body">FAISS IVF-PQ vector search with hybrid BM25 fallback. Semantic chunking with metadata-aware routing. Sub-500ms p95 on 50k documents.</p>
+        <div class="ai-p-tags">
+          <span class="ai-t">FAISS IVF-PQ</span>
+          <span class="ai-t">LangChain</span>
+          <span class="ai-t">Hybrid Retrieval</span>
+          <span class="ai-t">Pinecone</span>
+        </div>
+      </div>
+      <div class="ai-pillar">
+        <div class="ai-p-num">02</div>
+        <div class="ai-p-title">Hallucination Control</div>
+        <p class="ai-p-body">5-layer mitigation: self-consistency checks, source grounding, confidence scoring, HITL review queues, and automated LLM-as-Judge evaluation pipelines.</p>
+        <div class="ai-p-tags">
+          <span class="ai-t">Self-Consistency</span>
+          <span class="ai-t">Source Attribution</span>
+          <span class="ai-t">HITL Pipelines</span>
+          <span class="ai-t">LLM-as-Judge</span>
+        </div>
+      </div>
+      <div class="ai-pillar">
+        <div class="ai-p-num">03</div>
+        <div class="ai-p-title">Frontend Integration</div>
+        <p class="ai-p-body">SSE token streaming in Angular with real-time source panel, confidence indicators, and audit trail UI. Zero-latency perceived response via progressive rendering.</p>
+        <div class="ai-p-tags">
+          <span class="ai-t">SSE Streaming</span>
+          <span class="ai-t">Angular Signals</span>
+          <span class="ai-t">Progressive Render</span>
+          <span class="ai-t">Audit Trail UI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+.oss-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.oss-card{
+  background:var(--abyss);border:1px solid var(--border);
+  border-radius:12px;padding:24px;
+  transition:all .3s var(--ease);cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.oss-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.oss-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.oss-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.oss-card-name{font-weight:800;font-size:var(--sm);color:var(--txt1)}
+.oss-card-type{font-family:var(--mono);font-size:9px;color:var(--txt4);letter-spacing:.08em}
+.oss-card-desc{font-size:var(--sm);color:var(--txt3);line-height:1.65;margin-bottom:14px}
+.oss-card-stats{display:flex;gap:14px}
+.oss-stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--txt4)}
+.oss-stat-num{color:var(--txt2);font-weight:700}
+
+.oss-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--v),var(--c2));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--spring);
+}
+.oss-card:hover::after{transform:scaleX(1);}
+
+@media(max-width:1024px){
+  .oss-strip{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:768px){
+  .oss-strip{grid-template-columns:1fr;gap:12px}
+  .oss-card{padding:16px}
+}

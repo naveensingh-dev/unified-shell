@@ -1,0 +1,199 @@
+<section id="case-studies" aria-labelledby="cs-h">
+  <div class="wrap">
+    <div class="r">
+      <p class="s-eyebrow">Deep Dives</p>
+      <h2 class="s-title" id="cs-h">Case <em>Studies</em></h2>
+      <p class="s-sub">Architecture decisions, performance breakthroughs, and lessons learned — the full story behind the metrics.</p>
+    </div>
+    <div class="cs-grid r">
+      <!-- Case Study 1 -->
+      <article class="cs-card" (click)="openLM('Zero-Regression Angular v6→v19 Migration')">
+        <div class="cs-visual cs-visual-migration">
+          <div class="cs-visual-inner">
+            <div class="cs-v-migration">
+              <div class="cs-v-version">
+                <div class="cs-v-badge">v6</div>
+                <div class="cs-v-label">Angular</div>
+                <div class="cs-v-zero" style="color:var(--rose2);border-color:rgba(190,24,93,.3);background:rgba(190,24,93,.06)">Legacy</div>
+              </div>
+              <div class="cs-v-arrow">→</div>
+              <div class="cs-v-version">
+                <div class="cs-v-badge">v19</div>
+                <div class="cs-v-label">Angular</div>
+                <div class="cs-v-zero">Zero Bugs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-eyebrow">
+            <span>Migration Architecture</span>
+            <span class="cs-reading-time">⏱ 12 min read</span>
+          </div>
+          <h3 class="cs-title">Zero-Regression v6→v19: Migrating a Live $50k Banking Platform</h3>
+          <p class="cs-desc">18 months. 13 Angular versions. 12 engineers. Zero production regressions. The exact schematics, testing strategy, and governance framework that made it possible.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">Custom Schematics</span>
+            <span class="cs-tag">Nx Monorepo</span>
+            <span class="cs-tag">Zero Regression</span>
+            <span class="cs-tag">ADR Governance</span>
+          </div>
+          <div class="cs-metric-strip">
+            <div class="cs-metric"><div class="cs-metric-val">18mo</div><div class="cs-metric-lbl">Timeline</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">0</div><div class="cs-metric-lbl">Regressions</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">−30%</div><div class="cs-metric-lbl">Bundle Size</div></div>
+          </div>
+          <div class="cs-card-arrow">Read full story →</div>
+        </div>
+      </article>
+
+      <!-- Case Study 2 -->
+      <article class="cs-card" (click)="openLM('40% Performance Improvement via Angular Signals')">
+        <div class="cs-visual cs-visual-perf">
+          <div class="cs-visual-inner">
+            <div class="cs-v-perf">
+              <div class="cs-v-lcp-row">
+                <div class="cs-v-lcp-item">
+                  <div class="cs-v-lcp-bar before"></div>
+                  <div class="cs-v-lcp-num" style="color:var(--rose2)">4.0s</div>
+                  <div class="cs-v-lcp-lbl">BEFORE</div>
+                </div>
+                <div class="cs-v-lcp-item">
+                  <div class="cs-v-lcp-bar after"></div>
+                  <div class="cs-v-lcp-num" style="color:var(--c3)">2.4s</div>
+                  <div class="cs-v-lcp-lbl">AFTER</div>
+                </div>
+              </div>
+              <div class="cs-v-delta">↓ 40% LCP</div>
+            </div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-eyebrow">
+            <span>Performance Engineering</span>
+            <span class="cs-reading-time">⏱ 9 min read</span>
+          </div>
+          <h3 class="cs-title">40% LCP Gain: Migrating to Angular Signals + &#64;defer Architecture</h3>
+          <p class="cs-desc">Signal-based fine-grained reactivity eliminated zone.js overhead. &#64;defer blocks deferred 60% of initial payload. Lighthouse hit 97. Here's every step with real metrics.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">Angular Signals</span>
+            <span class="cs-tag">&#64;defer</span>
+            <span class="cs-tag">Zone-less</span>
+            <span class="cs-tag">Lighthouse CI</span>
+          </div>
+          <div class="cs-metric-strip">
+            <div class="cs-metric"><div class="cs-metric-val">−40%</div><div class="cs-metric-lbl">LCP</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">−30%</div><div class="cs-metric-lbl">Bundle</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">97</div><div class="cs-metric-lbl">Lighthouse</div></div>
+          </div>
+          <div class="cs-card-arrow">Read full story →</div>
+        </div>
+      </article>
+
+      <!-- Case Study 3 -->
+      <article class="cs-card" (click)="openLM('Production RAG in 6 Weeks — Zero to Enterprise AI')">
+        <div class="cs-visual cs-visual-rag">
+          <div class="cs-visual-inner">
+            <div class="cs-v-rag">
+              <div class="cs-v-rag-step" style="--rag-delay:0s">
+                <div class="cs-v-rag-dot" style="background:var(--v3)"></div>
+                Ingest → Chunk → Embed
+                <div class="cs-v-rag-badge">50k docs</div>
+              </div>
+              <div class="cs-v-rag-step" style="--rag-delay:.5s">
+                <div class="cs-v-rag-dot" style="background:var(--c3)"></div>
+                FAISS IVF-PQ Retrieval
+                <div class="cs-v-rag-badge">500ms</div>
+              </div>
+              <div class="cs-v-rag-step" style="--rag-delay:1s">
+                <div class="cs-v-rag-dot" style="background:var(--em2)"></div>
+                5-Layer Hallucination Guard
+                <div class="cs-v-rag-badge">98%✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-eyebrow">
+            <span>GenAI Architecture</span>
+            <span class="cs-reading-time">⏱ 15 min read</span>
+          </div>
+          <h3 class="cs-title">Zero to Production RAG: 6 Weeks, Regulated Banking, No Prior GenAI Experience</h3>
+          <p class="cs-desc">No prior GenAI experience. 6 weeks. 50k document corpus. 98%+ accuracy. A compliance assistant that senior auditors trusted. Every architectural decision documented.</p>
+          <div class="cs-tags">
+            <span class="cs-tag">LangChain</span>
+            <span class="cs-tag">FAISS IVF-PQ</span>
+            <span class="cs-tag">LangSmith</span>
+            <span class="cs-tag">Hallucination Control</span>
+          </div>
+          <div class="cs-metric-strip">
+            <div class="cs-metric"><div class="cs-metric-val">6wk</div><div class="cs-metric-lbl">Delivery</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">98%</div><div class="cs-metric-lbl">Accuracy</div></div>
+            <div class="cs-metric"><div class="cs-metric-val">500ms</div><div class="cs-metric-lbl">P95 Latency</div></div>
+          </div>
+          <div class="cs-card-arrow">Read full story →</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TESTIMONIALS ═══════════ -->
+<!-- <section id="testimonials" aria-labelledby="testi-h">
+  <div class="wrap">
+    <div class="testi-header r">
+      <p class="s-eyebrow">Social Proof</p>
+      <h2 class="s-title" id="testi-h">What <em>Leaders</em> Say</h2>
+      <p class="s-sub">Endorsements from engineering managers and technical leads who've seen the impact first-hand.</p>
+    </div>
+    <div class="testi-grid r">
+      <div class="testi-card">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-quote">"Naveen single-handedly transformed our Angular codebase — moving from v6 to v19 with absolute zero regressions. His systematic approach, custom schematics, and obsessive attention to performance budgets saved the team months of work. Truly a rare frontend architect."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div>
+            <div class="testi-name">Ankur Kapoor</div>
+            <div class="testi-role">Engineering Manager · Primus Software</div>
+          </div>
+          <a href="https://www.linkedin.com/in/naveen-singh-57051ab9/" target="_blank" rel="noopener noreferrer" class="testi-li-link" aria-label="View on LinkedIn">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zm2-1a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="testi-card r d1">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-quote">"What impressed me most wasn't just Naveen's deep Angular expertise — it was how he built a full production RAG system in 6 weeks with zero prior GenAI experience. He's the kind of engineer who learns faster under pressure. The hallucination mitigation pipeline he designed is genuinely enterprise-grade."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,var(--c),var(--em2))">RS</div>
+          <div>
+            <div class="testi-name">Rajiv Sharma</div>
+            <div class="testi-role">CTO · Banking Client · Primus</div>
+          </div>
+          <a href="https://www.linkedin.com/in/naveen-singh-57051ab9/" target="_blank" rel="noopener noreferrer" class="testi-li-link" aria-label="View on LinkedIn">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zm2-1a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="testi-card r d2">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-quote">"The micro-frontend architecture Naveen designed reduced our cross-team release dependencies by 35%. He didn't just build the platform — he ran the architecture guild, wrote ADRs, and made the entire org more technically literate. Our 3 junior devs grew to mid-level under his mentorship."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold2))">PM</div>
+          <div>
+            <div class="testi-name">Priya Mehta</div>
+            <div class="testi-role">VP Engineering · Insurance Division</div>
+          </div>
+          <a href="https://www.linkedin.com/in/naveen-singh-57051ab9/" target="_blank" rel="noopener noreferrer" class="testi-li-link" aria-label="View on LinkedIn">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zm2-1a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

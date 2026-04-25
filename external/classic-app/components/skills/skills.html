@@ -1,0 +1,286 @@
+<section id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="skills-header-row r">
+      <div>
+        <p class="s-eyebrow">Technical Arsenal</p>
+        <h2 class="s-title" id="skills-h" style="margin-bottom:8px">Skills &amp; <em>Expertise</em></h2>
+        <p class="s-sub" style="margin-bottom:0">Deep platform expertise built over 9+ years on enterprise production systems — from Angular internals to LLM pipeline engineering.</p>
+      </div>
+      <div class="skill-legend">
+        <div class="sl-item"><div class="sl-dot core"></div>Core Mastery</div>
+        <div class="sl-item"><div class="sl-dot em"></div>AI / ML</div>
+        <div class="sl-item"><div class="sl-dot prac"></div>Platform</div>
+      </div>
+    </div>
+
+    <div class="skill-constellation-wrap r">
+      <canvas #skillCanvas id="skill-canvas" aria-label="Interactive skill network visualization"></canvas>
+
+      <div class="constellation-ui">
+        <div class="cn-left">
+          <div class="constellation-label">⬡ SKILL NETWORK — PHYSICS ENGINE</div>
+          <div class="constellation-hints">
+            ● Drag → Orbit · Hover → Analyze · Click → Lock Focus
+          </div>
+        </div>
+        <div class="constellation-controls">
+          <button class="cn-filter-btn active" data-cat="all">ALL</button>
+          <button class="cn-filter-btn" data-cat="core">⚡ CORE</button>
+          <button class="cn-filter-btn" data-cat="ai">🤖 AI / ML</button>
+          <button class="cn-filter-btn" data-cat="plat">🛡 PLATFORM</button>
+        </div>
+      </div>
+
+      <!-- EXTREME CYBERPUNK HUD OVERLAY -->
+      <div class="cyber-hud" id="cyber-hud">
+        <svg class="hud-tether-svg" id="hud-tether-svg">
+          <path id="hud-tether-path" d="" />
+          <circle id="hud-tether-dot1" cx="0" cy="0" r="3" />
+          <circle id="hud-tether-dot2" cx="0" cy="0" r="5" />
+          <circle id="hud-tether-pulse" cx="0" cy="0" r="15" fill="none" stroke="currentColor" stroke-width="1" />
+        </svg>
+
+        <div class="ch-card" id="ch-card">
+          <div class="ch-corner ch-tl"></div>
+          <div class="ch-corner ch-tr"></div>
+          <div class="ch-corner ch-bl"></div>
+          <div class="ch-corner ch-br"></div>
+
+          <div class="ch-top">
+            <div class="ch-ring-wrap">
+              <svg viewBox="0 0 100 100" class="ch-ring-svg">
+                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 4"/>
+                <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none" stroke-dasharray="20 10" class="spin-fast"/>
+                <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="10 20" class="spin-slow-rev"/>
+                <circle cx="50" cy="50" r="4" fill="currentColor" class="pulse-dot"/>
+              </svg>
+            </div>
+            <div class="ch-sys">
+              <div class="ch-sys-label"><span><</span> SYS.NODE.IDENT <span>/></span></div>
+              <div class="ch-title" id="ch-title">ANGULAR V19</div>
+              <div class="ch-subtitle" id="ch-subtitle">ENTERPRISE PLATFORM STRATEGY LEAD.</div>
+            </div>
+          </div>
+
+          <div class="ch-metrics">
+            <div class="ch-m-label">NEURAL PROFICIENCY_</div>
+            <div class="ch-m-val" id="ch-pct">98%</div>
+            <div class="ch-bar-wrap">
+              <div class="ch-bar-track">
+                <div class="ch-bar-fill" id="ch-bar-fill"></div>
+              </div>
+              <div class="ch-bar-markers">
+                <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ch-tech">
+            <div class="ch-tech-header">
+              <span class="ch-tech-icon">⬡</span> INTEGRATED TECHNOLOGIES
+            </div>
+            <div class="ch-chips" id="ch-chips">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="skills-grid r">
+      <!-- ANGULAR ECOSYSTEM -->
+      <div class="sg">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="sg-head">
+          <div>
+            <span class="sg-ico">⚡</span>
+            <div class="sg-name">Angular Ecosystem</div>
+          </div>
+          <span class="sg-badge core">Core Mastery</span>
+        </div>
+        <div class="sg-level">
+          <div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div>
+        </div>
+        <div class="sg-bar-wrap">
+          <div class="sg-bar-label"><span>Expert Proficiency</span><span class="sg-bar-pct">98%</span></div>
+          <div class="sg-bar-track"><div class="sg-bar-fill" style="--bar-pct:98%;--bar-delay:.1s"></div></div>
+        </div>
+        <div class="sg-tags">
+          <span class="sk hi">Angular v19</span>
+          <span class="sk hi">Ivy Renderer</span>
+          <span class="sk hi">Zone-less Architecture</span>
+          <span class="sk hi">Signals API</span>
+          <span class="sk hi">&#64;defer Blocks</span>
+          <span class="sk hi">Custom Schematics</span>
+          <span class="sk hi">NgRx Signals</span>
+          <span class="sk">Hierarchical DI</span>
+        </div>
+      </div>
+
+      <!-- FRONTEND ARCHITECTURE -->
+      <div class="sg">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="sg-head">
+          <div>
+            <span class="sg-ico">🏗</span>
+            <div class="sg-name">Frontend Architecture</div>
+          </div>
+          <span class="sg-badge core">Core Mastery</span>
+        </div>
+        <div class="sg-level">
+          <div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div>
+        </div>
+        <div class="sg-bar-wrap">
+          <div class="sg-bar-label"><span>Expert Proficiency</span><span class="sg-bar-pct">96%</span></div>
+          <div class="sg-bar-track"><div class="sg-bar-fill" style="--bar-pct:96%;--bar-delay:.2s"></div></div>
+        </div>
+        <div class="sg-tags">
+          <span class="sk hi">Micro-Frontends</span>
+          <span class="sk hi">Nx Monorepo</span>
+          <span class="sk hi">Module Federation</span>
+          <span class="sk hi">Web Vitals (LCP, INP, CLS)</span>
+          <span class="sk hi">Lighthouse CI</span>
+          <span class="sk">Multi-Package Build Cache</span>
+          <span class="sk">TypeScript 5.x</span>
+        </div>
+      </div>
+
+      <!-- GEN AI & LLM -->
+      <div class="sg em-type">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="sg-head">
+          <div>
+            <span class="sg-ico">🤖</span>
+            <div class="sg-name">Generative AI & LLM</div>
+          </div>
+          <span class="sg-badge em">Emerging Lead</span>
+        </div>
+        <div class="sg-level">
+          <div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot"></div>
+        </div>
+        <div class="sg-bar-wrap">
+          <div class="sg-bar-label"><span>Advanced</span><span class="sg-bar-pct">89%</span></div>
+          <div class="sg-bar-track"><div class="sg-bar-fill em-fill" style="--bar-pct:89%;--bar-delay:.3s"></div></div>
+        </div>
+        <div class="sg-tags">
+          <span class="sk hi">Advanced RAG</span>
+          <span class="sk hi">LangChain</span>
+          <span class="sk hi">FAISS IVF-PQ</span>
+          <span class="sk hi">LLM Fine-tuning</span>
+          <span class="sk hi">Prompt Engineering</span>
+          <span class="sk hi">LLM-as-Judge</span>
+          <span class="sk">Hybrid Retrieval</span>
+          <span class="sk">LangSmith</span>
+        </div>
+      </div>
+
+      <!-- PLATFORM & DEVOPS -->
+      <div class="sg prac-type">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="sg-head">
+          <div>
+            <span class="sg-ico">🛡</span>
+            <div class="sg-name">Platform & DevOps</div>
+          </div>
+          <span class="sg-badge prac">Practitioner</span>
+        </div>
+        <div class="sg-level">
+          <div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot"></div>
+        </div>
+        <div class="sg-bar-wrap">
+          <div class="sg-bar-label"><span>High Proficiency</span><span class="sg-bar-pct">88%</span></div>
+          <div class="sg-bar-track"><div class="sg-bar-fill" style="--bar-pct:88%;--bar-delay:.4s"></div></div>
+        </div>
+        <div class="sg-tags">
+          <span class="sk hi">Docker / Containers</span>
+          <span class="sk hi">GitHub Actions</span>
+          <span class="sk hi">CI/CD Governance</span>
+          <span class="sk hi">Python (FastAPI)</span>
+          <span class="sk hi">Auth0 / JWT</span>
+          <span class="sk">Redis</span>
+          <span class="sk">Vite</span>
+        </div>
+      </div>
+
+      <!-- TESTING & QUALITY -->
+      <div class="sg prac-type">
+        <div class="card-shine" aria-hidden="true"></div>
+        <div class="sg-head">
+          <div>
+            <span class="sg-ico">🧪</span>
+            <div class="sg-name">Testing & Quality</div>
+          </div>
+          <span class="sg-badge prac">Practitioner</span>
+        </div>
+        <div class="sg-level">
+          <div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot on"></div><div class="sg-level-dot"></div>
+        </div>
+        <div class="sg-bar-wrap">
+          <div class="sg-bar-label"><span>Expert</span><span class="sg-bar-pct">90%</span></div>
+          <div class="sg-bar-track"><div class="sg-bar-fill" style="--bar-pct:90%;--bar-delay:.5s"></div></div>
+        </div>
+        <div class="sg-tags">
+          <span class="sk hi">Jasmine / Karma</span>
+          <span class="sk hi">Jest</span>
+          <span class="sk hi">Cypress E2E</span>
+          <span class="sk hi">RxJS Marble Tests</span>
+          <span class="sk hi">ADR Formalization</span>
+          <span class="sk">SonarQube</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="currently-advancing r">
+      <div class="ca-header">
+        <h3 class="ca-title">Currently Advancing</h3>
+        <div class="ca-badge">Deep Expertise · Production Ready</div>
+      </div>
+      <div class="ca-split-container">
+        <div class="ca-sources">
+          <div class="ca-sources-title">Next-Gen Patterns</div>
+          <div class="ca-source-list">
+            <div class="ca-source-item ca-source-ngrx">
+              <div class="ca-source-dot"></div>
+              <div class="ca-source-content">
+                <div class="ca-source-name">Angular Next-Gen</div>
+                <div class="ca-source-category">resource() API · linkedSignal</div>
+              </div>
+              <div class="ca-source-score">95%</div>
+            </div>
+            <div class="ca-source-item ca-source-nx">
+              <div class="ca-source-dot"></div>
+              <div class="ca-source-content">
+                <div class="ca-source-name">Agentic AI Systems</div>
+                <div class="ca-source-category">LangGraph · Tool-use</div>
+              </div>
+              <div class="ca-source-score">92%</div>
+            </div>
+            <div class="ca-source-item ca-source-analog">
+              <div class="ca-source-dot"></div>
+              <div class="ca-source-content">
+                <div class="ca-source-name">LLM Fine-Tuning</div>
+                <div class="ca-source-category">LoRA/QLoRA · RLHF</div>
+              </div>
+              <div class="ca-source-score">88%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ca-details">
+          <div class="ca-details-title">Thought Leadership</div>
+          <div class="ca-detail-box">
+            <div class="ca-detail-query">Organizational Impact & Learning Velocity</div>
+            <div class="ca-detail-answer">
+              <p>Applying a consistent rapid-mastery methodology across new domains — from Angular internals to agentic LLM workflows:</p>
+              <ul class="ca-detail-list">
+                <li><strong>Learning Velocity:</strong> Production-ready RAG platform in 6 weeks from zero AI background.</li>
+                <li><strong>Knowledge Sharing:</strong> Delivered talks on Signals and custom schematics adopted across 3 squads.</li>
+                <li><strong>Mentorship:</strong> Scaled a frontend org from 3 to 12 engineers with zero attrition.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

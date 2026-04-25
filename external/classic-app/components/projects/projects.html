@@ -1,0 +1,176 @@
+<section id="projects" class="projects-command-center" aria-labelledby="proj-h">
+  <div class="wrap-full">
+    <div class="r header-section">
+      <p class="s-eyebrow">Technical Registry</p>
+      <h2 class="s-title" id="proj-h">Engineering <em>Intelligence</em></h2>
+      <p class="s-sub">Architectural deep-dives into 12 flagship systems. Explore data flow, failure modes, and strategic outcomes.</p>
+    </div>
+
+    <div class="cc-frame r">
+      <!-- SIDEBAR (30%) -->
+      <aside class="cc-sidebar">
+        <div class="cc-sidebar-header">
+          <span class="cc-pulse"></span>
+          CENTRAL_REGISTRY_V4.8
+        </div>
+        <div class="cc-nav-list custom-scroll">
+          <div *ngFor="let p of projects" 
+               class="cc-nav-item" 
+               [class.active]="selectedProject.id === p.id"
+               (click)="selectProject(p)">
+            <div class="cc-ni-meta">
+              <span class="cc-ni-id">#{{p.id.toUpperCase()}}</span>
+              <span class="cc-ni-badge">{{p.status}}</span>
+            </div>
+            <div class="cc-ni-name">{{p.name}}</div>
+            <div class="cc-ni-active-bar"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- DETAIL BODY (70%) -->
+      <main class="cc-body">
+        <div class="cc-body-glass"></div>
+        
+        <header class="cc-body-header">
+          <div class="cc-bh-top">
+            <h3 class="cc-title">{{selectedProject.name}}</h3>
+            <div class="cc-sync">
+              <div class="cc-sync-track"><div class="cc-sync-fill" [style.width.%]="selectedProject.syncRate"></div></div>
+              <span class="cc-sync-val">SYNC_{{selectedProject.syncRate}}%</span>
+            </div>
+          </div>
+          <div class="cc-tags">
+            <span *ngFor="let tech of selectedProject.techStack" class="cc-t">{{tech}}</span>
+          </div>
+        </header>
+
+        <nav class="cc-tabs">
+          <button *ngFor="let t of ['about', 'challenges', 'architecture', 'impact', 'issues']" 
+                  class="cc-tab-btn" 
+                  [class.active]="activeTab === t"
+                  (click)="setTab(t)">
+            {{t | uppercase}}
+          </button>
+        </nav>
+
+        <div class="cc-viewport">
+          <!-- ABOUT -->
+          <div *ngIf="activeTab === 'about'" class="cc-pane active">
+            <div class="cc-pane-scroll custom-scroll">
+              <div class="cc-neural-briefing">
+                <ng-container *ngFor="let segment of getFormattedAbout(selectedProject.about)">
+                  <h3 *ngIf="segment.type === 'h3'" class="cc-nb-h3">{{segment.content}}</h3>
+                  <p *ngIf="segment.type === 'p'" class="cc-nb-p" [innerHTML]="segment.content"></p>
+                </ng-container>
+              </div>
+              <div class="cc-kpi">
+                <div class="cc-kpi-lbl">SYSTEM PERFORMANCE METRIC</div>
+                <div class="cc-kpi-val">{{selectedProject.metric}}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHALLENGES -->
+          <div *ngIf="activeTab === 'challenges'" class="cc-pane active">
+            <div class="cc-pane-scroll custom-scroll">
+              <div class="cc-entry">
+                <div class="cc-e-lbl">Strategic Context</div>
+                <div class="cc-e-val">{{selectedProject.challenges.context}}</div>
+              </div>
+              <div class="cc-entry">
+                <div class="cc-e-lbl">Client Pain Point</div>
+                <div class="cc-e-val">{{selectedProject.challenges.painPoint}}</div>
+              </div>
+              <div class="cc-entry">
+                <div class="cc-e-lbl">Resolution Path</div>
+                <div class="cc-e-val">{{selectedProject.challenges.resolution}}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ARCHITECTURE (HIGH-FIDELITY GROUPING) -->
+          <div *ngIf="activeTab === 'architecture'" class="cc-pane active">
+            <div class="cc-blueprint custom-scroll">
+              <div class="cc-bp-stage" 
+                   [style.height.px]="getBlueprintHeight(selectedProject)"
+                   style="width: 1000px; margin: 0 auto; position: relative;">
+                <div class="cc-bp-grid"></div>
+                
+                <svg class="cc-bp-svg-canvas" width="100%" height="100%">
+                  <defs>
+                    <marker id="cc-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                      <path d="M0,0 L10,5 L0,10 Z" fill="var(--v3)" />
+                    </marker>
+                  </defs>
+                  
+                  <!-- Connections -->
+                  <g *ngFor="let conn of getBlueprintConnections(selectedProject)">
+                    <path [attr.d]="conn.d" class="cc-bp-wire" marker-end="url(#cc-arrow)" />
+                    <text *ngIf="conn.label" 
+                          [attr.x]="conn.labelX" 
+                          [attr.y]="conn.labelY" 
+                          text-anchor="middle"
+                          class="cc-bp-wire-txt">
+                      {{conn.label}}
+                    </text>
+                  </g>
+                </svg>
+
+                <!-- Subgraphs / Groups -->
+                <div *ngFor="let g of getBlueprintGroups(selectedProject)" 
+                     class="cc-bp-group" 
+                     [style.left.px]="g.x" 
+                     [style.top.px]="g.y"
+                     [style.width.px]="g.w"
+                     [style.height.px]="g.h">
+                  <div class="cc-bp-group-label">{{g.label}}</div>
+                </div>
+
+                <!-- Nodes -->
+                <div *ngFor="let node of selectedProject.blueprint.nodes" 
+                     class="cc-bp-node" 
+                     [style.left.px]="node.x" 
+                     [style.top.px]="node.y">
+                  <div class="cc-bp-node-inner">
+                    <div class="cc-bp-node-label">{{node.label}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMPACT -->
+          <div *ngIf="activeTab === 'impact'" class="cc-pane active">
+            <div class="cc-pane-scroll custom-scroll">
+              <div class="cc-entry impact">
+                <div class="cc-e-lbl">Strategic Outcome</div>
+                <div class="cc-e-val">{{selectedProject.impact.outcome}}</div>
+              </div>
+              <div class="cc-entry impact">
+                <div class="cc-e-lbl">Competitive Edge</div>
+                <div class="cc-e-val">{{selectedProject.impact.competitiveEdge}}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ISSUES -->
+          <div *ngIf="activeTab === 'issues'" class="cc-pane active">
+            <div class="cc-pane-scroll custom-scroll">
+              <div *ngFor="let issue of selectedProject.issues" class="cc-issue">
+                <div class="cc-i-top">
+                  <span class="cc-i-ico">⚠</span>
+                  ANOMALOUS_EVENT: {{issue.anomalousEvent}}
+                </div>
+                <div class="cc-i-body">
+                  <div class="cc-i-step"><strong>Thinking:</strong> {{issue.thinkingApproach}}</div>
+                  <div class="cc-i-step"><strong>Solution:</strong> {{issue.solution}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
