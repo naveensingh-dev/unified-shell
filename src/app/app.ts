@@ -119,8 +119,14 @@ export class App implements OnInit {
       // Give DOM and styles a moment to settle
       await new Promise(resolve => setTimeout(resolve, 50));
 
-      // 3. BOOTSTRAP
-      this.currentAppRef = await bootstrapApplication(rootComponent, config);
+      // 3. BOOTSTRAP: Pass parent injector to link the context
+      this.currentAppRef = await bootstrapApplication(rootComponent, {
+        ...config,
+        providers: [
+          ...(config.providers || []),
+          { provide: EnvironmentInjector, useValue: this.injector }
+        ]
+      });
       
       // 4. LOADER PURGE
       this.purgePortoliosLoaders();
