@@ -3,12 +3,15 @@ import {
   signal, 
   Inject, 
   PLATFORM_ID, 
-  ApplicationRef, 
   EnvironmentInjector,
-  OnInit
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  createEnvironmentInjector,
+  ComponentRef,
+  OnDestroy
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { bootstrapApplication } from '@angular/platform-browser';
 import { DashboardComponent } from './components/dashboard/dashboard';
 
 @Component({
@@ -23,7 +26,7 @@ import { DashboardComponent } from './components/dashboard/dashboard';
       }
 
       <div id="portfolio-container" [hidden]="view() === 'dashboard'">
-        <!-- PORTFOLIOS RENDERED HERE DYNAMICALLY -->
+        <ng-container #portfolioHost></ng-container>
       </div>
 
       @if (view() !== 'dashboard') {
@@ -60,16 +63,20 @@ import { DashboardComponent } from './components/dashboard/dashboard';
     .exit-btn:hover { border-color: #00f5ff; box-shadow: 0 0 25px rgba(0, 245, 255, 0.5); }
   `]
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
+  @ViewChild('portfolioHost', { read: ViewContainerRef }) portfolioHost!: ViewContainerRef;
+
   view = signal<'dashboard' | 'os' | 'classic'>('dashboard');
   isOverlayHovered = signal(false);
-  private currentAppRef: ApplicationRef | null = null;
+  
+  private currentComponentRef: ComponentRef<any> | null = null;
+  private currentEnvInjector: EnvironmentInjector | null = null;
   private activeStyleTag: HTMLLinkElement | null = null;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(DOCUMENT) private document: Document,
-    private injector: EnvironmentInjector
+    private rootInjector: EnvironmentInjector
   ) {}
 
   ngOnInit() {
@@ -81,7 +88,7 @@ export class App implements OnInit {
   async onExperienceSelect(type: 'os' | 'classic') {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // 1. STYLE WARMUP: Inject styles immediately
+    // 1. STYLE WARMUP
     this.injectAppStyles(type);
 
     try {
@@ -109,35 +116,46 @@ export class App implements OnInit {
       this.view.set(type);
       this.updateRootClasses('portfolio');
       
-      const container = this.document.getElementById('portfolio-container');
-      if (container) {
-        container.innerHTML = '<app-root></app-root>';
-        window.scrollTo(0, 0);
-      }
-
       // Give DOM and styles a moment to settle
-      await new Promise(resolve => setTimeout(resolve, 80));
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // 3. CLEAN DYNAMIC BOOTSTRAP
-      // We pass the Shell's EnvironmentInjector as the parent. 
-      // This ensures sub-apps see the Shell's providers (HttpClient, etc) 
-      // without needing to initialize their own.
-      this.currentAppRef = await bootstrapApplication(rootComponent, {
-        ...config,
-        providers: [
-          ...(config.providers || []),
-          // Use Internal API to link the parent injector
-          { provide: 'ɵPARENT_INJECTOR', useValue: this.injector }
-        ]
+      // 3. DYNAMIC RENDERING (WISE RESOLUTION)
+      // Instead of bootstrapping a new application, we create an EnvironmentInjector
+      // that is a child of the Shell's injector and includes the sub-app's providers.
+      this.destroyCurrentExperience();
+      
+      this.currentEnvInjector = createEnvironmentInjector(
+        config.providers || [],
+        this.rootInjector,
+        `PortfolioInjector:${type}`
+      );
+
+      // Render the sub-app component into our host container using the linked injector.
+      this.currentComponentRef = this.portfolioHost.createComponent(rootComponent, {
+        environmentInjector: this.currentEnvInjector
       });
       
       // 4. LOADER PURGE
       this.purgePortoliosLoaders();
       
-      console.log(`Successfully bootstrapped ${type} with parent link.`);
+      console.log(`Successfully rendered ${type} as a child component.`);
     } catch (err) {
-      console.error(`Bootstrap failed for ${type}:`, err);
+      console.error(`Rendering failed for ${type}:`, err);
       this.exitToDashboard();
+    }
+  }
+
+  private destroyCurrentExperience() {
+    if (this.currentComponentRef) {
+      this.currentComponentRef.destroy();
+      this.currentComponentRef = null;
+    }
+    if (this.currentEnvInjector) {
+      this.currentEnvInjector.destroy();
+      this.currentEnvInjector = null;
+    }
+    if (this.portfolioHost) {
+      this.portfolioHost.clear();
     }
   }
 
@@ -150,15 +168,10 @@ export class App implements OnInit {
   }
 
   exitToDashboard() {
-    if (this.currentAppRef) {
-      this.currentAppRef.destroy();
-      this.currentAppRef = null;
-    }
+    this.destroyCurrentExperience();
     this.removeAppStyles();
     this.updateRootClasses('dashboard');
     window.scrollTo(0, 0);
-    const container = this.document.getElementById('portfolio-container');
-    if (container) container.innerHTML = '';
     this.view.set('dashboard');
   }
 
@@ -193,5 +206,9 @@ export class App implements OnInit {
       html.classList.add('is-portfolio');
       body.classList.add('is-portfolio');
     }
+  }
+
+  ngOnDestroy() {
+    this.destroyCurrentExperience();
   }
 }
