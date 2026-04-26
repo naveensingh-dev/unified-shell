@@ -5,7 +5,6 @@ import {
   PLATFORM_ID, 
   ApplicationRef, 
   EnvironmentInjector,
-  runInInjectionContext,
   OnInit
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
@@ -89,7 +88,7 @@ export class App implements OnInit {
       let rootComponent: any;
       let config: any;
 
-      // Parallelize module imports for faster resolution
+      // Parallelize module imports
       if (type === 'os') {
         const [compMod, configMod] = await Promise.all([
           import('@os-app/app.component'),
@@ -117,19 +116,25 @@ export class App implements OnInit {
       }
 
       // Give DOM and styles a moment to settle
-      await new Promise(resolve => setTimeout(resolve, 60));
+      await new Promise(resolve => setTimeout(resolve, 80));
 
-      // 3. DYNAMIC BOOTSTRAP IN SHARED CONTEXT
-      // We wrap the bootstrap in the Shell's injection context to ensure
-      // field initializers in sub-apps correctly find the shared EnvironmentInjector.
-      await runInInjectionContext(this.injector, async () => {
-        this.currentAppRef = await bootstrapApplication(rootComponent, config);
+      // 3. CLEAN DYNAMIC BOOTSTRAP
+      // We pass the Shell's EnvironmentInjector as the parent. 
+      // This ensures sub-apps see the Shell's providers (HttpClient, etc) 
+      // without needing to initialize their own.
+      this.currentAppRef = await bootstrapApplication(rootComponent, {
+        ...config,
+        providers: [
+          ...(config.providers || []),
+          // Use Internal API to link the parent injector
+          { provide: 'ɵPARENT_INJECTOR', useValue: this.injector }
+        ]
       });
       
       // 4. LOADER PURGE
       this.purgePortoliosLoaders();
       
-      console.log(`Successfully bootstrapped in context: ${type}`);
+      console.log(`Successfully bootstrapped ${type} with parent link.`);
     } catch (err) {
       console.error(`Bootstrap failed for ${type}:`, err);
       this.exitToDashboard();
@@ -137,11 +142,10 @@ export class App implements OnInit {
   }
 
   private purgePortoliosLoaders() {
-    // Portfolios use #loader for their initial loading screens
-    const loaders = this.document.querySelectorAll('#loader');
+    const loaders = this.document.querySelectorAll('#loader, #os-loader');
     loaders.forEach(ldr => {
       (ldr as HTMLElement).style.display = 'none';
-      ldr.classList.add('gone');
+      ldr.classList.add('gone', 'loaded');
     });
   }
 
