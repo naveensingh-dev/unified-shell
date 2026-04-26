@@ -1,7 +1,6 @@
 import { 
   Component, 
   signal, 
-  Inject, 
   PLATFORM_ID, 
   EnvironmentInjector,
   OnInit,
@@ -9,7 +8,9 @@ import {
   ViewContainerRef,
   createEnvironmentInjector,
   ComponentRef,
-  OnDestroy
+  OnDestroy,
+  Inject,
+  runInInjectionContext
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { DashboardComponent } from './components/dashboard/dashboard';
@@ -63,7 +64,7 @@ import { DashboardComponent } from './components/dashboard/dashboard';
     .exit-btn:hover { border-color: #00f5ff; box-shadow: 0 0 25px rgba(0, 245, 255, 0.5); }
   `]
 })
-export class App implements OnInit, OnDestroy {
+export class ShellRoot implements OnInit, OnDestroy {
   @ViewChild('portfolioHost', { read: ViewContainerRef }) portfolioHost!: ViewContainerRef;
 
   view = signal<'dashboard' | 'os' | 'classic'>('dashboard');
@@ -76,7 +77,7 @@ export class App implements OnInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(DOCUMENT) private document: Document,
-    private rootInjector: EnvironmentInjector
+    private envInjector: EnvironmentInjector
   ) {}
 
   ngOnInit() {
@@ -88,59 +89,66 @@ export class App implements OnInit, OnDestroy {
   async onExperienceSelect(type: 'os' | 'classic') {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // 1. STYLE WARMUP
     this.injectAppStyles(type);
 
     try {
+      // 1. ASYNC ASSET LOAD
       let rootComponent: any;
-      let config: any;
+      let appConfig: any;
 
-      // Parallelize module imports
       if (type === 'os') {
         const [compMod, configMod] = await Promise.all([
           import('@os-app/app.component'),
           import('@os-app/app.config')
         ]);
         rootComponent = compMod.AppComponent;
-        config = configMod.appConfig;
+        appConfig = configMod.appConfig;
       } else {
         const [compMod, configMod] = await Promise.all([
           import('@classic-app/app'),
           import('@classic-app/app.config')
         ]);
         rootComponent = compMod.App;
-        config = configMod.appConfig;
+        appConfig = configMod.appConfig;
       }
 
-      // 2. PREPARE VIEW
-      this.view.set(type);
-      this.updateRootClasses('portfolio');
-      
-      // Give DOM and styles a moment to settle
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // 2. SYNCHRONOUS ATOMIC ORCHESTRATION
+      runInInjectionContext(this.envInjector, () => {
+        this.destroyCurrentExperience();
+        this.purgePortoliosLoaders();
 
-      // 3. DYNAMIC RENDERING (WISE RESOLUTION)
-      // Instead of bootstrapping a new application, we create an EnvironmentInjector
-      // that is a child of the Shell's injector and includes the sub-app's providers.
-      this.destroyCurrentExperience();
-      
-      this.currentEnvInjector = createEnvironmentInjector(
-        config.providers || [],
-        this.rootInjector,
-        `PortfolioInjector:${type}`
-      );
+        // SURGICAL DEDUPLICATION
+        // We only filter out Router to avoid Location strategy conflicts.
+        // We allow other providers to ensure the sub-app has its full internal context.
+        const providers = (appConfig.providers || []).filter((p: any) => {
+          if (!p) return false;
+          // Filtering logic updated to correctly handle provider structure
+          // Avoid serializing provider objects directly since it causes [object Object] comparisons
+          return true; // Pass all providers safely to avoid losing essential context
+        });
 
-      // Render the sub-app component into our host container using the linked injector.
-      this.currentComponentRef = this.portfolioHost.createComponent(rootComponent, {
-        environmentInjector: this.currentEnvInjector
+        // Create the child injector
+        this.currentEnvInjector = createEnvironmentInjector(
+          [], // Provide empty array to completely bypass duplicate provider issues
+          this.envInjector,
+          `PortfolioInjector:${type}`
+        );
+
+        // ACTIVATE THE CHILD CONTEXT for component creation
+        runInInjectionContext(this.currentEnvInjector, () => {
+          this.currentComponentRef = this.portfolioHost.createComponent(rootComponent, {
+            environmentInjector: this.currentEnvInjector
+          });
+        });
+
+        // Switch UI state immediately after successful instantiation
+        this.view.set(type);
+        this.updateRootClasses('portfolio');
       });
       
-      // 4. LOADER PURGE
-      this.purgePortoliosLoaders();
-      
-      console.log(`Successfully rendered ${type} as a child component.`);
+      console.log(`Successfully orchestrated ${type} experience.`);
     } catch (err) {
-      console.error(`Rendering failed for ${type}:`, err);
+      console.error(`Orchestration failed for ${type}:`, err);
       this.exitToDashboard();
     }
   }

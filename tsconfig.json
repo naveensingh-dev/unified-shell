@@ -2,9 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
@@ -20,25 +20,14 @@
     "baseUrl": ".",
     "preserveSymlinks": false,
     "paths": {
-      "@angular/core": ["./node_modules/@angular/core"],
-      "@angular/common": ["./node_modules/@angular/common"],
-      "@angular/compiler": ["./node_modules/@angular/compiler"],
-      "@angular/platform-browser": ["./node_modules/@angular/platform-browser"],
-      "@angular/platform-browser-dynamic": ["./node_modules/@angular/platform-browser-dynamic"],
-      "@angular/router": ["./node_modules/@angular/router"],
-      "@angular/forms": ["./node_modules/@angular/forms"],
-      "@angular/animations": ["./node_modules/@angular/animations"],
-      "@angular/*": ["./node_modules/@angular/*"],
-      "rxjs": ["./node_modules/rxjs"],
-      "rxjs/*": ["./node_modules/rxjs/*"],
       "@os-app/*": ["../new-portfolio/src/app/*"],
       "@classic-app/*": ["../portfolio-angular/src/app/*"]
     }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }

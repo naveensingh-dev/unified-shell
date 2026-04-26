@@ -6,9 +6,10 @@ import {
   ViewChild, 
   OnDestroy, 
   afterNextRender,
-  Inject,
   PLATFORM_ID,
-  signal
+  signal,
+  inject,
+  Inject
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 

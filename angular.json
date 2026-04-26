@@ -30,7 +30,7 @@
               { "glob": "**/*", "input": "public" },
               { "glob": "**/*", "input": "../new-portfolio/public", "output": "/" },
               { "glob": "**/*", "input": "../portfolio-angular/public", "output": "/" },
-              { "glob": "p1.png", "input": "../portfolio-angular/src/assets", "output": "/assets" },
+              { "glob": "**/*", "input": "../portfolio-angular/src/assets", "output": "/assets" },
               { "glob": "styles.css", "input": "../new-portfolio/src", "output": "/assets/os" },
               { "glob": "styles.css", "input": "../portfolio-angular/src", "output": "/assets/classic" }
             ],
