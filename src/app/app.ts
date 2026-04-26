@@ -117,21 +117,19 @@ export class App implements OnInit {
       }
 
       // Give DOM and styles a moment to settle
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => setTimeout(resolve, 60));
 
-      // 3. BOOTSTRAP: Pass parent injector to link the context
-      this.currentAppRef = await bootstrapApplication(rootComponent, {
-        ...config,
-        providers: [
-          ...(config.providers || []),
-          { provide: EnvironmentInjector, useValue: this.injector }
-        ]
+      // 3. DYNAMIC BOOTSTRAP IN SHARED CONTEXT
+      // We wrap the bootstrap in the Shell's injection context to ensure
+      // field initializers in sub-apps correctly find the shared EnvironmentInjector.
+      await runInInjectionContext(this.injector, async () => {
+        this.currentAppRef = await bootstrapApplication(rootComponent, config);
       });
       
       // 4. LOADER PURGE
       this.purgePortoliosLoaders();
       
-      console.log(`Successfully bootstrapped: ${type}`);
+      console.log(`Successfully bootstrapped in context: ${type}`);
     } catch (err) {
       console.error(`Bootstrap failed for ${type}:`, err);
       this.exitToDashboard();
