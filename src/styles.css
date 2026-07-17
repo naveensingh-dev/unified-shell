@@ -25,6 +25,11 @@ body.dashboard-active {
   cursor: none !important;
 }
 
+/* RESTORE SYSTEM CURSOR INSIDE COMMAND OVERLAY */
+.cmd-overlay, .cmd-overlay * {
+  cursor: auto !important;
+}
+
 /* Ensure components can be seen */
 app-shell-root {
   display: block;
